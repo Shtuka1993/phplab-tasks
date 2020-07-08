@@ -17,7 +17,7 @@ function getMinuteQuarter(int $minute)
     define("Q3", "third");
     define("Q4", "fourth");
 
-    if(($minute >= 0) AND ($minute <= 60)) {
+    if (($minute >= 0) AND ($minute <= 60)) {
         if($minute == 0) {
             return Q4;
         }
@@ -53,7 +53,7 @@ function getMinuteQuarter(int $minute)
  */
 function isLeapYear(int $year)
 {
-    if($year >= 1900) {
+    if ($year >= 1900) {
         return ($year % 4) === 0;
     } else {
         throw new InvalidArgumentException();
@@ -76,7 +76,7 @@ function isSumEqual(string $input)
     $s1 = 0;
     $s2= 0;
 
-    if(strlen($input) === 6) {
+    if (strlen($input) === 6) {
         for( $i=0; $i<3; $i++ ) {
             $s1 += $input[$i];
             $s2 += $input[5-$i];
