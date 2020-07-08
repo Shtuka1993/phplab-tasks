@@ -34,10 +34,23 @@ function snakeCaseToCamelCase(string $input)
 function mirrorMultibyteString(string $input)
 {
     $words = explode(' ', $input);
-    foreach ($words as $word) {
-        $word = strrev($word);
+    $length = count($words);
+    for ($i = 0; $i < $length; $i++) {
+        $word = $words[$i];
+        $words[$i] = mb_strrev($word);
     }
     $result = implode(' ', $words);
+    return $result;
+}
+
+function mb_strrev(string $word)
+{
+    $result = '';
+    $length = mb_strlen($word) - 1;
+    for ($i = $length; $i>=0; $i--) {
+        $result .= mb_substr($word, $i, 1);
+    }
+    return $result;
 }
 
 /**
