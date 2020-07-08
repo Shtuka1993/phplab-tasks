@@ -10,7 +10,9 @@
 function snakeCaseToCamelCase(string $input)
 {
     $result = $input;
-    foreach ($input as $i=>$c) {
+    $length = strlen($input);
+    for ($i=0; $i<$length; $i++) {
+        $c = $input[$i];
         if($c === '_') {
             $oldLeter = $input[$i+1];
             $newLeter = strtoupper($oldLeter);
