@@ -11,7 +11,7 @@ function snakeCaseToCamelCase(string $input)
 {
     $result = $input;
     $length = strlen($input);
-    for ($i=0; $i<$length; $i++) {
+    for ($i = 0; $i < $length; $i++) {
         $c = $input[$i];
         if($c === '_') {
             $oldLeter = $input[$i+1];
@@ -37,17 +37,17 @@ function mirrorMultibyteString(string $input)
     $length = count($words);
     for ($i = 0; $i < $length; $i++) {
         $word = $words[$i];
-        $words[$i] = mb_strrev($word);
+        $words[$i] = mbStrrev($word);
     }
     $result = implode(' ', $words);
     return $result;
 }
 
-function mb_strrev(string $word)
+function mbStrrev(string $word)
 {
     $result = '';
     $length = mb_strlen($word) - 1;
-    for ($i = $length; $i>=0; $i--) {
+    for ($i = $length; $i >= 0; $i--) {
         $result .= mb_substr($word, $i, 1);
     }
     return $result;
@@ -69,11 +69,11 @@ function mb_strrev(string $word)
  */
 function getBrandName(string $noun)
 {
-    $result = '';
     if ($noun[0] === $noun[-1]) {
-        $result = ucfirst($noun).substr($noun, 1);
+        $result = ucfirst($noun) . substr($noun, 1);
     } else {
-        $result = "The ".ucfirst($noun);
+        $result = "The " . ucfirst($noun);
     }
+
     return $result;
 }
