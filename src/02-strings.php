@@ -9,6 +9,31 @@
  */
 function snakeCaseToCamelCase(string $input)
 {
+    $inputArray = explode('_', $input);
+    $inputArray = array_map(
+        function ($elem) {
+            return ucfirst($elem);
+        },
+        $inputArray
+    );
+
+    return lcfirst(implode('', $inputArray));
+}
+
+function snakeCaseToCamelCaseOld(string $input)
+{
+    $result = $input;
+    $length = strlen($input);
+    for ($i = 0; $i < $length; $i++) {
+        $c = $input[$i];
+        if($c === '_') {
+            $oldLeter = $input[$i+1];
+            $newLeter = strtoupper($oldLeter);
+            $result = substr_replace($result, $newLeter, $i+1, 1);
+        }
+    }
+    $result = str_replace('_', '', $result);
+    return $result;
 }
 
 /**
@@ -21,6 +46,24 @@ function snakeCaseToCamelCase(string $input)
  */
 function mirrorMultibyteString(string $input)
 {
+    $words = explode(' ', $input);
+    $length = count($words);
+    for ($i = 0; $i < $length; $i++) {
+        $word = $words[$i];
+        $words[$i] = mbStrrev($word);
+    }
+    $result = implode(' ', $words);
+    return $result;
+}
+
+function mbStrrev(string $word)
+{
+    $result = '';
+    $length = mb_strlen($word) - 1;
+    for ($i = $length; $i >= 0; $i--) {
+        $result .= mb_substr($word, $i, 1);
+    }
+    return $result;
 }
 
 /**
@@ -39,4 +82,11 @@ function mirrorMultibyteString(string $input)
  */
 function getBrandName(string $noun)
 {
+    if ($noun[0] === $noun[-1]) {
+        $result = ucfirst($noun) . substr($noun, 1);
+    } else {
+        $result = "The " . ucfirst($noun);
+    }
+
+    return $result;
 }
