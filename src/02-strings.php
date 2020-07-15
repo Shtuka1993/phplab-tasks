@@ -9,6 +9,19 @@
  */
 function snakeCaseToCamelCase(string $input)
 {
+    $inputArray = explode('_', $input);
+    $inputArray = array_map(
+        function ($elem) {
+            return ucfirst($elem);
+        },
+        $inputArray
+    );
+
+    return lcfirst(implode('', $inputArray));
+}
+
+function snakeCaseToCamelCaseOld(string $input)
+{
     $result = $input;
     $length = strlen($input);
     for ($i = 0; $i < $length; $i++) {
