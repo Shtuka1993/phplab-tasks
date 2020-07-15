@@ -12,29 +12,27 @@
  */
 function getMinuteQuarter(int $minute)
 {
+    $result = '';
     if (($minute >= 0) AND ($minute <= 60)) {
         if($minute == 0) {
-
-            return "fourth";
+            $result = "fourth";
         }
         $quarter = (int)(($minute - 1) / 15) + 1;
         switch ($quarter) {
             case 1:
-
-                return "first";
+                $result = "first";
                 break;
             case 2:
-
-                return "second";
+                $result = "second";
                 break;
             case 3:
-
-                return "third";
+                $result = "third";
                 break;
             default:
-
-                return "fourth";
+                $result = "fourth";
         }
+
+        return $result;
     } else {
         throw new InvalidArgumentException();
     }
