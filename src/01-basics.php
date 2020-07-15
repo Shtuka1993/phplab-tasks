@@ -15,7 +15,7 @@ function getMinuteQuarter(int $minute)
     $result = '';
     if (($minute >= 0) AND ($minute <= 60)) {
         if($minute == 0) {
-            $result = "fourth";
+            return "fourth";
         }
         $quarter = (int)(($minute - 1) / 15) + 1;
         switch ($quarter) {
