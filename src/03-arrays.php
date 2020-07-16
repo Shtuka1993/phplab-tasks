@@ -86,13 +86,9 @@ function getUniqueValue(array $input)
  */
 function groupByTag(array $input)
 {
-    $tags = [];
     $result = [];
     foreach ($input as $item) {
         foreach ($item['tags'] as $tag) {
-            if (! in_array($tag, $tags)) {
-                $tags[] = $tag;
-            }
             $result[$tag][] = $item['name'];
         }
     }
