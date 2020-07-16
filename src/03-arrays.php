@@ -38,16 +38,8 @@ function getUniqueValue(array $input)
 
         return 0;
     } else {
-
         for ($i = 0; $i < $length; $i++) {
-            if (is_array($input[$i])) {
-                if(count($input[$i] === 0)) {
-                    $input[$i] = PHP_INT_MAX;
-                } else {
-                    $input[$i] = getUniqueValue($input[$i]);
-                }
-            }
-            if (is_array($ununic) && in_array($input[$i], $ununic)) {
+            if (in_array($input[$i], $ununic)) {
                 continue;
             }
             $matches = 0;
@@ -57,7 +49,7 @@ function getUniqueValue(array $input)
                 }
             }
             if ($matches === 0) {
-                $minUnic = ($input[$i] < $minUnic) ?: $input[$i];
+                $minUnic = ($input[$i] < $minUnic) ? $input[$i] : $minUnic;
                 $unic[] = $input[$i];
             } else {
                 $ununic[] = $input[$i];
