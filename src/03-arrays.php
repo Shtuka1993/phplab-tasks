@@ -56,7 +56,7 @@ function getUniqueValue(array $input)
             }
         }
 
-        return ($minUnic === PHP_INT_MAX)?0:$minUnic;
+        return ($minUnic === PHP_INT_MAX) ? 0 : $minUnic;
     }
 }
 
@@ -86,4 +86,20 @@ function getUniqueValue(array $input)
  */
 function groupByTag(array $input)
 {
+    $tags = [];
+    $result = [];
+    foreach ($input as $item) {
+        foreach ($item['tags'] as $tag) {
+            if (! in_array($tag, $tags)) {
+                $tags[] = $tag;
+            }
+            $result[$tag][] = $item['name'];
+        }
+    }
+    foreach ($result as &$item) {
+        sort($item);
+    }
+    ksort($result);
+
+    return $result;
 }
