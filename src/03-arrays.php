@@ -11,10 +11,11 @@
 function repeatArrayValues(array $input)
 {
     $result = [];
+    $index = 0;
     foreach ($input as $item) {
-        for ($i = 1; $i <= $item; $i++) {
-            $result[] = $item;
-        }
+        $arr = array_fill($index, $item, $item);
+        $result = array_merge($result, $arr);
+        $index = $index + $item;
     }
 
     return $result;
