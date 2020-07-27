@@ -11,7 +11,173 @@
  */
 function getUniqueFirstLetters(array $airports)
 {
-    // put your logic here
+    $letters = [];
+    foreach ($airports as $var) {
+        $letters[] = getFirstLetter($var);
+    }
+    $letters = array_unique($letters);
+    sort($letters);
 
-    return ['A', 'B', 'C'];
+    return $letters;
+}
+
+/**
+ * Returns first letter of airports array item name
+ *
+ * @param $var
+ * @return mixed
+ */
+function getFirstLetter($var)
+{
+
+    return $var['name'][0];
+}
+
+/**
+ * Return airport array filtered by first letter
+ *
+ * @param $array
+ * @param $key
+ * @return array
+ */
+function filterByFirstLetter($array, $key)
+{
+    define('FIRST_LETTER', $key);
+
+    return array_filter($array, 'filterFirstLetter');
+}
+
+/**
+ * Calback function for filtering by first letter
+ *
+ * Use constant FIRST_LETTER as key
+ *
+ * @param $var
+ * @return bool
+ */
+function filterFirstLetter($var)
+{
+
+    return getFirstLetter($var) === FIRST_LETTER;
+}
+
+/**
+ * Sort array by key
+ *
+ * @param $array
+ * @param $key
+ * @return mixed
+ */
+function sortByKey($array, $key)
+{
+    usort($array, 'sortBy'.ucfirst($key));
+
+    return $array;
+}
+
+/**
+ * Function that generate result for sorting callback function when we check to strings
+ *
+ * @param $var1
+ * @param $var2
+ * @return int
+ */
+function checkSortingStrings($var1, $var2) {
+    if ($var1 === $var2) {
+
+        return 0;
+    }
+
+    return ($var1 < $var2) ? -1 : 1;
+}
+
+/**
+ * Callback function that apply sorting by name
+ *
+ * @param $var1
+ * @param $var2
+ * @return int
+ */
+function sortByName($var1, $var2)
+{
+    $var1 = $var1['name'];
+    $var2 = $var2['name'];
+
+    return checkSortingStrings($var1, $var2);
+}
+
+/**
+ * Callback function that apply sorting by code
+ *
+ * @param $var1
+ * @param $var2
+ * @return int
+ */
+function sortByCode($var1, $var2)
+{
+    $var1 = $var1['code'];
+    $var2 = $var2['code'];
+
+    return checkSortingStrings($var1, $var2);
+}
+
+/**
+ * Callback function that apply sorting by state
+ *
+ * @param $var1
+ * @param $var2
+ * @return int
+ */
+function sortByState($var1, $var2)
+{
+    $var1 = $var1['state'];
+    $var2 = $var2['state'];
+
+    return checkSortingStrings($var1, $var2);
+}
+
+/**
+ * Callback function that apply sorting by city
+ *
+ * @param $var1
+ * @param $var2
+ * @return int
+ */
+function sortByCity($var1, $var2)
+{
+    $var1 = $var1['city'];
+    $var2 = $var2['city'];
+
+    return checkSortingStrings($var1, $var2);
+}
+
+/**
+ * Return airport array filtered by state
+ *
+ * @param $array
+ * @param $key
+ * @return array
+ */
+function filterByState($array, $key)
+{
+    define('STATE', $key);
+
+    return array_filter($array, 'filterState');
+}
+
+/**
+ * Callback function for filtering by state
+ *
+ * @param $var
+ * @return bool
+ */
+function filterState($var)
+{
+
+    return $var['state'] === STATE;
+}
+
+function pagination($array, $page)
+{
+
 }
