@@ -1,11 +1,14 @@
 <?php
 require_once './functions.php';
 
+define('PER_PAGE', 5);
+
 $airports = require './airports.php';
 $url = $_SERVER['REQUEST_URI'];
 $url = ($url === '/') ? $url.'?' : $url.'&';
 
-var_dump($url);
+#var_dump($url);
+#var_dump($_GET);
 
 // Filtering
 /**
@@ -13,11 +16,11 @@ var_dump($url);
  * and apply filtering by First Airport Name Letter and/or Airport State
  * (see Filtering tasks 1 and 2 below)
  */
-if(isset($_GET['filter_by_first_letter'])) {
+if (isset($_GET['filter_by_first_letter'])) {
     $airports =  filterByFirstLetter($airports, $_GET['filter_by_first_letter']);
 }
 
-if(isset($_GET['filter_by_state'])) {
+if (isset($_GET['filter_by_state'])) {
     $airports =  filterByState($airports, $_GET['filter_by_state']);
 }
 
@@ -27,9 +30,12 @@ if(isset($_GET['filter_by_state'])) {
  * and apply sorting
  * (see Sorting task below)
  */
-if(isset($_GET['sort'])) {
+if (isset($_GET['sort'])) {
     $airports =  sortByKey($airports, $_GET['sort']);
 }
+
+$pagesCount = pagination($airports, PER_PAGE);
+$request = $_GET;
 
 // Pagination
 /**
@@ -37,6 +43,13 @@ if(isset($_GET['sort'])) {
  * and apply pagination logic
  * (see Pagination task below)
  */
+if (isset($_GET['page'])) {
+    $page = ( $_GET['page'] > $pagesCount ) ? 1 : $_GET['page'];
+
+} else {
+    $page = 1;
+}
+$airports = getPagination($airports, PER_PAGE, $page);
 
 ?>
 <!doctype html>
@@ -68,7 +81,7 @@ if(isset($_GET['sort'])) {
         Filter by first letter:
 
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <a href="<?= $url ?>filter_by_first_letter=<?= $letter ?>"><?= $letter ?></a>
+            <a href="<?= generateUrl($request, 'filter_by_first_letter', $letter) ?>"><?= $letter ?></a>
         <?php endforeach; ?>
 
         <a href="/" class="float-right">Reset all filters</a>
@@ -87,10 +100,10 @@ if(isset($_GET['sort'])) {
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="<?= $url ?>sort=name">Name</a></th>
-            <th scope="col"><a href="<?= $url ?>sort=code">Code</a></th>
-            <th scope="col"><a href="<?= $url ?>sort=state">State</a></th>
-            <th scope="col"><a href="<?= $url ?>sort=city">City</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'name') ?>">Name</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'code') ?>">Code</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'state') ?>">State</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'city') ?>">City</a></th>
             <th scope="col">Address</th>
             <th scope="col">Timezone</th>
         </tr>
@@ -110,7 +123,7 @@ if(isset($_GET['sort'])) {
         <tr>
             <td><?= $airport['name'] ?></td>
             <td><?= $airport['code'] ?></td>
-            <td><a href="<?= $url ?>filter_by_state=<?= $airport['state'] ?>"><?= $airport['state'] ?></a></td>
+            <td><a href="<?= generateUrl($request, 'filter_by_state', $airport['state']) ?>"><?= $airport['state'] ?></a></td>
             <td><?= $airport['city'] ?></td>
             <td><?= $airport['address'] ?></td>
             <td><?= $airport['timezone'] ?></td>
@@ -130,9 +143,23 @@ if(isset($_GET['sort'])) {
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item<?= ($page == 1)?' active':'' ?>"><a class="page-link" href="<?= generateURL($request, 'page', 1) ?>"><?= 1 ?></a></li>
+            <?php if ($pagesCount > PER_PAGE) { ?>
+                <?php if ($page > ( PER_PAGE + 2 )) { ?>
+                    <li class="page-item">...</li>
+                <?php } ?>
+                <?php
+                    $start = ( ( $page - PER_PAGE ) <= 1 ) ? 2 : ( $page - PER_PAGE );
+                    $end = ( ( $page + PER_PAGE ) >= $pagesCount ) ? $pagesCount - 1 : ( $page + PER_PAGE );
+                    for ($i = $start; $i <= $end; $i++) {
+                ?>
+                    <li class="page-item<?= ($i == $page)?' active':'' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $i) ?>"><?= $i ?></a></li>
+                <?php } ?>
+                <?php if ($page <= ( $pagesCount - PER_PAGE - 2 )) { ?>
+                    <li class="page-item">...</li>
+                <?php } ?>
+                <li class="page-item<?= ($page == $pagesCount)?' active':'' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $pagesCount) ?>"><?= $pagesCount ?></a></li>
+            <? } ?>
         </ul>
     </nav>
 

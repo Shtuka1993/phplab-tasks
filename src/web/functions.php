@@ -177,7 +177,47 @@ function filterState($var)
     return $var['state'] === STATE;
 }
 
-function pagination($array, $page)
+/**
+ * Generate request URL
+ *
+ * @param $array
+ * @param $page
+ */
+function generateURL($request, $key, $value)
+{
+    $request[$key] = $value;
+    $result = [];
+    foreach ($request as $key => $value) {
+        $result[] = $key.'='.$value;
+    }
+
+    return '/?'.implode("&", $result);
+}
+
+/**
+ * Return count of page
+ *
+ * @param $array
+ * @param $per_page
+ * @return float|int
+ */
+function pagination($array, $per_page)
+{
+    $pages = (int)( count($array) / 5 );
+
+    return $pages;
+}
+
+/**
+ * Filters array by current page
+ *
+ * @param $array
+ * @param $per_page
+ * @param $page
+ * @return array
+ */
+function getPagination($array, $per_page, $page)
 {
 
+    return array_slice($array, ( $page - 1 ) * $per_page, $per_page);
 }
