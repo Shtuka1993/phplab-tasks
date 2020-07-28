@@ -7,9 +7,6 @@ $airports = require './airports.php';
 $url = $_SERVER['REQUEST_URI'];
 $url = ($url === '/') ? $url.'?' : $url.'&';
 
-#var_dump($url);
-#var_dump($_GET);
-
 // Filtering
 /**
  * Here you need to check $_GET request if it has any filtering
