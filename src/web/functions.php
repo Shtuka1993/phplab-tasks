@@ -48,7 +48,7 @@ function filterByFirstLetter($array, $key)
 }
 
 /**
- * Calback function for filtering by first letter
+ * Callback function for filtering by first letter
  *
  * Use constant FIRST_LETTER as key
  *
