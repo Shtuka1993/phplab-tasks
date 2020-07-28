@@ -183,9 +183,12 @@ function filterState($var)
  * @param $array
  * @param $page
  */
-function generateURL($request, $key, $value)
+function generateURL($request, $key, $value, $resetPage)
 {
     $request[$key] = $value;
+    if ($resetPage) {
+        $request['page'] = 1;
+    }
     $result = [];
     foreach ($request as $key => $value) {
         $result[] = $key.'='.$value;
@@ -220,4 +223,15 @@ function getPagination($array, $per_page, $page)
 {
 
     return array_slice($array, ( $page - 1 ) * $per_page, $per_page);
+}
+
+/**
+ * Reset current pagination page
+ *
+ * @return bool
+ */
+function resetPage() {
+    $_GET['page'] = 1;
+
+    return true;
 }

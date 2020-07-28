@@ -4,8 +4,6 @@ require_once './functions.php';
 define('PER_PAGE', 5);
 
 $airports = require './airports.php';
-$url = $_SERVER['REQUEST_URI'];
-$url = ($url === '/') ? $url.'?' : $url.'&';
 
 // Filtering
 /**
@@ -78,7 +76,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
         Filter by first letter:
 
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <a href="<?= generateUrl($request, 'filter_by_first_letter', $letter) ?>"><?= $letter ?></a>
+            <a href="<?= generateUrl($request, 'filter_by_first_letter', $letter, true) ?>"><?= $letter ?></a>
         <?php endforeach; ?>
 
         <a href="/" class="float-right">Reset all filters</a>
@@ -97,10 +95,10 @@ $airports = getPagination($airports, PER_PAGE, $page);
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'name') ?>">Name</a></th>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'code') ?>">Code</a></th>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'state') ?>">State</a></th>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'city') ?>">City</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'name', false) ?>">Name</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'code', false) ?>">Code</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'state', false) ?>">State</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'city', false) ?>">City</a></th>
             <th scope="col">Address</th>
             <th scope="col">Timezone</th>
         </tr>
@@ -120,7 +118,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
         <tr>
             <td><?= $airport['name'] ?></td>
             <td><?= $airport['code'] ?></td>
-            <td><a href="<?= generateUrl($request, 'filter_by_state', $airport['state']) ?>"><?= $airport['state'] ?></a></td>
+            <td><a href="<?= generateUrl($request, 'filter_by_state', $airport['state'], true) ?>"><?= $airport['state'] ?></a></td>
             <td><?= $airport['city'] ?></td>
             <td><?= $airport['address'] ?></td>
             <td><?= $airport['timezone'] ?></td>
@@ -140,7 +138,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item<?= ($page == 1)?' active':'' ?>"><a class="page-link" href="<?= generateURL($request, 'page', 1) ?>"><?= 1 ?></a></li>
+            <li class="page-item<?= ($page == 1)?' active':'' ?>"><a class="page-link" href="<?= generateURL($request, 'page', 1, false) ?>"><?= 1 ?></a></li>
             <?php if ($pagesCount > PER_PAGE) { ?>
                 <?php if ($page > ( PER_PAGE + 2 )) { ?>
                     <li class="page-item">...</li>
@@ -150,12 +148,12 @@ $airports = getPagination($airports, PER_PAGE, $page);
                     $end = ( ( $page + PER_PAGE ) >= $pagesCount ) ? $pagesCount - 1 : ( $page + PER_PAGE );
                     for ($i = $start; $i <= $end; $i++) {
                 ?>
-                    <li class="page-item<?= ($i == $page)?' active':'' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $i) ?>"><?= $i ?></a></li>
+                    <li class="page-item<?= ($i == $page)?' active':'' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $i, false) ?>"><?= $i ?></a></li>
                 <?php } ?>
                 <?php if ($page <= ( $pagesCount - PER_PAGE - 2 )) { ?>
                     <li class="page-item">...</li>
                 <?php } ?>
-                <li class="page-item<?= ($page == $pagesCount)?' active':'' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $pagesCount) ?>"><?= $pagesCount ?></a></li>
+                <li class="page-item<?= ($page == $pagesCount)?' active':'' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $pagesCount, false) ?>"><?= $pagesCount ?></a></li>
             <? } ?>
         </ul>
     </nav>
