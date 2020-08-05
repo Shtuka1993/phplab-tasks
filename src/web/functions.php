@@ -180,8 +180,11 @@ function filterState($var)
 /**
  * Generate request URL
  *
- * @param $array
- * @param $page
+ * @param $request
+ * @param $key
+ * @param $value
+ * @param $resetPage
+ * @return string
  */
 function generateURL($request, $key, $value, $resetPage)
 {
@@ -206,7 +209,9 @@ function generateURL($request, $key, $value, $resetPage)
  */
 function pagination($array, $per_page)
 {
-    $pages = (int)( count($array) / 5 );
+    $pages = ( count($array) / $per_page );
+    $pagesInt = (int)( count($array) / $per_page );
+    $pages = ( $pagesInt < $pages ) ? ( $pagesInt + 1 ) : $pagesInt;
 
     return $pages;
 }
