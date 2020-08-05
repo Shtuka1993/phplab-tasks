@@ -76,7 +76,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
         Filter by first letter:
 
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <a href="<?= generateUrl($request, 'filter_by_first_letter', $letter, true) ?>"><?= $letter ?></a>
+            <a href="<?= generateUrl($request, 'filter_by_first_letter', $letter, true) ?>" <?= ( $_GET['filter_by_first_letter'] == $letter ) ? 'class="font-weight-bold"' : '' ?>><?= $letter ?></a>
         <?php endforeach; ?>
 
         <a href="/" class="float-right">Reset all filters</a>
@@ -95,10 +95,10 @@ $airports = getPagination($airports, PER_PAGE, $page);
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'name', false) ?>">Name</a></th>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'code', false) ?>">Code</a></th>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'state', false) ?>">State</a></th>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'city', false) ?>">City</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'name', false) ?>" <?= ( $_GET['sort'] == "name" ) ? 'class="font-italic"' : '' ?>>Name</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'code', false) ?>" <?= ( $_GET['sort'] == "code" ) ? 'class="font-italic"' : '' ?>>Code</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'state', false) ?>" <?= ( $_GET['sort'] == "state" ) ? 'class="font-italic"' : '' ?>>State</a></th>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'city', false) ?>" <?= ( $_GET['sort'] == "city" ) ? 'class="font-italic"' : '' ?>>City</a></th>
             <th scope="col">Address</th>
             <th scope="col">Timezone</th>
         </tr>
