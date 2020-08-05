@@ -11,12 +11,19 @@ $airports = require './airports.php';
  * and apply filtering by First Airport Name Letter and/or Airport State
  * (see Filtering tasks 1 and 2 below)
  */
-if (isset($_GET['filter_by_first_letter'])) {
-    $airports = filterByFirstLetter($airports, $_GET['filter_by_first_letter']);
-}
 
+/** First of all generate state filtering(if it is set) - so we have array of available letters before filtering by letter  */
 if (isset($_GET['filter_by_state'])) {
     $airports = filterByState($airports, $_GET['filter_by_state']);
+}
+
+/**
+ * Lets generate updated letters array - after applying of filtering
+ */
+$letters = getUniqueFirstLetters($airports);
+
+if (isset($_GET['filter_by_first_letter'])) {
+    $airports = filterByFirstLetter($airports, $_GET['filter_by_first_letter']);
 }
 
 // Sorting
@@ -76,7 +83,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
     <div class="alert alert-dark">
         Filter by first letter:
 
-        <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
+        <?php foreach ($letters as $letter): ?>
             <a href="<?= generateUrl($request, 'filter_by_first_letter', $letter, true) ?>" <?= ($_GET['filter_by_first_letter'] == $letter) ? 'class="font-weight-bold"' : '' ?>><?= $letter ?></a>
         <?php endforeach; ?>
 
