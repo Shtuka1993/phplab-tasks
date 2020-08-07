@@ -5,11 +5,20 @@
  * without changing the order.
  * Example: [1,3,2] => [1,3,3,3,2,2]
  *
- * @param  array  $input
+ * @param  array $input
  * @return array
  */
 function repeatArrayValues(array $input)
 {
+    $result = [];
+    $index = 0;
+    foreach ($input as $item) {
+        $arr = array_fill($index, $item, $item);
+        $result = array_merge($result, $arr);
+        $index = $index + $item;
+    }
+
+    return $result;
 }
 
 /**
@@ -17,11 +26,39 @@ function repeatArrayValues(array $input)
  * Return the lowest unique value or 0 if there is no unique values or array is empty.
  * Example: [1, 2, 3, 2, 1, 5, 6] => 3
  *
- * @param  array  $input
+ * @param  array $input
  * @return int
  */
 function getUniqueValue(array $input)
 {
+    $unic = [];
+    $minUnic = PHP_INT_MAX;
+    $ununic = [];
+    $length = count($input);
+    if ($length === 0) {
+
+        return 0;
+    } else {
+        for ($i = 0; $i < $length; $i++) {
+            if (in_array($input[$i], $ununic)) {
+                continue;
+            }
+            $matches = 0;
+            for ($j = $i + 1; $j < $length; $j++) {
+                if ($input[$i] === $input[$j]) {
+                    $matches++;
+                }
+            }
+            if ($matches === 0) {
+                $minUnic = ($input[$i] < $minUnic) ? $input[$i] : $minUnic;
+                $unic[] = $input[$i];
+            } else {
+                $ununic[] = $input[$i];
+            }
+        }
+
+        return ($minUnic === PHP_INT_MAX) ? 0 : $minUnic;
+    }
 }
 
 /**
@@ -45,9 +82,21 @@ function getUniqueValue(array $input)
  *  'yellow' => ['orange', 'potato'],
  * ]
  *
- * @param  array  $input
+ * @param  array $input
  * @return array
  */
 function groupByTag(array $input)
 {
+    $result = [];
+    foreach ($input as $item) {
+        foreach ($item['tags'] as $tag) {
+            $result[$tag][] = $item['name'];
+        }
+    }
+    foreach ($result as &$item) {
+        sort($item);
+    }
+    ksort($result);
+
+    return $result;
 }
