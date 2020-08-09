@@ -170,7 +170,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
                 <?php } ?>
                 <li class="page-item<?php echo(($page == $pagesCount) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', $pagesCount, false)); ?>"><?php echo($pagesCount); ?></a>
                 </li>
-            <? } else if ($pagesCount > 1) {
+            <? } elseif ($pagesCount > 1) {
                 for ($i = 2; $i <= $pagesCount; $i++) {
                     ?>
                     <li class="page-item<?php echo(($i == $page) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', $i, false)); ?>"><?php echo($i); ?></a>
