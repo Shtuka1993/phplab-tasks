@@ -74,8 +74,7 @@ function countArgumentsWrapper()
     $args = func_get_args();
     $check = false;
     foreach ($args as $arg) {
-        $check = ! is_string($arg);
-        if($check) {
+        if(! is_string($arg)) {
             throw new InvalidArgumentException();
         }
     }
