@@ -215,9 +215,9 @@ function generateURL($request, $key, $value, $resetPage)
  */
 function pagination($array, $per_page)
 {
-    $pages = ( count($array) / $per_page );
-    $pagesInt = (int)( count($array) / $per_page );
-    $pages = ( $pagesInt < $pages ) ? ( $pagesInt + 1 ) : $pagesInt;
+    $pages = (count($array) / $per_page);
+    $pagesInt = (int)(count($array) / $per_page);
+    $pages = ($pagesInt < $pages) ? ($pagesInt + 1) : $pagesInt;
 
     return $pages;
 }
@@ -233,7 +233,7 @@ function pagination($array, $per_page)
 function getPagination($array, $per_page, $page)
 {
 
-    return array_slice($array, ( $page - 1 ) * $per_page, $per_page);
+    return array_slice($array, ($page - 1) * $per_page, $per_page);
 }
 
 /**
