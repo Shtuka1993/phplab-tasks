@@ -76,7 +76,7 @@ function filterFirstLetter($var)
  */
 function sortByKey($array, $key)
 {
-    usort($array, 'sortBy'.ucfirst($key));
+    usort($array, 'sortBy' . ucfirst($key));
 
     return $array;
 }
