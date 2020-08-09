@@ -200,7 +200,7 @@ function generateURL($request, $key, $value, $resetPage)
     }
     $result = [];
     foreach ($request as $key => $value) {
-        $result[] = $key.'='.$value;
+        $result[] = $key . '=' . $value;
     }
 
     return '/?'.implode("&", $result);
