@@ -33,38 +33,26 @@ function getFirstLetter($var)
 }
 
 /**
- * Added variable to save first letter.
- */
-$firstLetter = '';
-
-/**
  * Return airport array filtered by first letter
  *
  * @param $array
  * @param $key
  * @return array
  */
-function filterByFirstLetter($array, $key)
+function filterByFirstLetter($array)
 {
-    global $firstLetter;
-    $firstLetter = $key;
-
     return array_filter($array, 'filterFirstLetter');
 }
 
 /**
  * Callback function for filtering by first letter
  *
- * Use variable firstLetter as key
- *
  * @param $var
  * @return bool
  */
 function filterFirstLetter($var)
 {
-    global $firstLetter;
-
-    return getFirstLetter($var) === $firstLetter;
+    return getFirstLetter($var) === $_GET['filter_by_first_letter'];
 }
 
 /**

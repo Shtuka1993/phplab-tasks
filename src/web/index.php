@@ -23,7 +23,7 @@ if (isset($_GET['filter_by_state'])) {
 $letters = getUniqueFirstLetters($airports);
 
 if (isset($_GET['filter_by_first_letter'])) {
-    $airports = filterByFirstLetter($airports, $_GET['filter_by_first_letter']);
+    $airports = filterByFirstLetter($airports);
 }
 
 // Sorting
