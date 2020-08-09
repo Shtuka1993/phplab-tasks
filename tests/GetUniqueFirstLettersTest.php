@@ -15,54 +15,144 @@ class GetUniqueFirstLettersTest extends TestCase
     public function positiveDataProvider()
     {
         return [
-                [[[
-                    "name" => "Cedar City Regional Airport"
+                [
+                    [
+                        [
+                            "name" => "Cedar City Regional Airport"
+                        ],
+                        [
+                            "name" => "Ogden-Hinckley Airport"
+                        ],
+                        [
+                            "name" => "Provo Municipal Airport"
+                        ],
+                        [
+                            "name" => "St. George Regional Airport"
+                        ],
+                        [
+                            "name" => "Lynchburg Regional Airport"
+                        ],
+                        [
+                            "name" => "Friday Harbor Airport"
+                        ],
+                        [
+                            "name" => "Tri-Cities Airport"
+                        ],
+                        [
+                            "name" => "Pullman/Moscow Regional Airport"
+                        ]
+                    ],
+                    ['C','F', 'L', 'O', 'P', 'S', 'T']
                 ],
                 [
-                    "name" => "Ogden-Hinckley Airport"
+                    [
+                        [
+                            "name" => "Andriy"
+                        ],
+                        [
+                            "name" => "Ivan"
+                        ],
+                        [
+                            "name" => "Yuriy"
+                        ],
+                        [
+                            "name" => "Volodymyr"
+                        ],
+                        [
+                            "name" => "Vitaliy"
+                        ],
+                        [
+                            "name" => "Vlad"
+                        ],
+                        [
+                            "name" => "Stepan"
+                        ]
+                    ],
+                    ['A', 'I', 'S', 'V', 'Y']
                 ],
+            [
                 [
-                    "name" => "Provo Municipal Airport"
+                    [
+                       "name" => "Oksana"
+                    ],
+                    [
+                        "name" => "Oleksandra"
+                    ],
+                    [
+                        "name" => "Svitlana"
+                    ],
+                    [
+                        "name" => "Viktoriya"
+                    ],
+                    [
+                        "name" => "Galyna"
+                    ],
+                    [
+                        "name" => "Iryna"
+                    ],
+                    [
+                        "name" => "Yana"
+                    ]
                 ],
+                ['G', 'I', 'O', 'S', 'V', 'Y']
+            ],
+            [
                 [
-                    "name" => "St. George Regional Airport"
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "test"
+                    ],
+                    [
+                        "name" => "test"
+                    ],
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "test"
+                    ],
+                    [
+                        "name" => "Check"
+                    ],
+                    [
+                        "name" => "Alert"
+                    ]
                 ],
+                ['A', 'C', 'T']
+            ],
+            [
                 [
-                    "name" => "Lynchburg Regional Airport"
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "Test"
+                    ],
+                    [
+                        "name" => "Test"
+                    ]
                 ],
-                [
-                    "name" => "Friday Harbor Airport"
-                ],
-                [
-                    "name" => "Tri-Cities Airport"
-                ],
-                [
-                    "name" => "Pullman/Moscow Regional Airport"
-                ]], ['C','F', 'L', 'O', 'P', 'S', 'T']],
-            [[[
-                "name" => "Test"
-                ],
-                [
-                    "name" => "Test"
-                ],
-                [
-                    "name" => "Test"
-                ],
-                [
-                    "name" => "Test"
-                ],
-                [
-                    "name" => "Test"
-                ],
-                [
-                    "name" => "Test"
-                ],
-                [
-                    "name" => "Test"
-                ],
-                [
-                    "name" => "Test"
-                ]], ['T']]
+                ['T']]
         ];
     }
 }
