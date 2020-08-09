@@ -29,7 +29,6 @@ function getUniqueFirstLetters(array $airports)
  */
 function getFirstLetter($var)
 {
-
     return $var['name'][0];
 }
 
