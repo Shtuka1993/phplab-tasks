@@ -83,7 +83,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
         Filter by first letter:
 
         <?php foreach ($letters as $letter): ?>
-            <a href="<?= generateUrl($request, 'filter_by_first_letter', $letter, true) ?>" <?= ($_GET['filter_by_first_letter'] == $letter) ? 'class="font-weight-bold"' : '' ?>><?= $letter ?></a>
+            <a href="<?php echo(generateUrl($request, 'filter_by_first_letter', $letter, true)); ?>" <?php echo(($_GET['filter_by_first_letter'] == $letter) ? 'class="font-weight-bold"' : ''); ?>><?php echo($letter); ?></a>
         <?php endforeach; ?>
 
         <a href="/" class="float-right">Reset all filters</a>
@@ -102,13 +102,13 @@ $airports = getPagination($airports, PER_PAGE, $page);
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'name', false) ?>" <?= ($_GET['sort'] == "name") ? 'class="font-italic"' : '' ?>>Name</a>
+            <th scope="col"><a href="<?php echo(generateUrl($request, 'sort', 'name', false)); ?>" <?php echo(($_GET['sort'] == "name") ? 'class="font-italic"' : ''); ?>>Name</a>
             </th>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'code', false) ?>" <?= ($_GET['sort'] == "code") ? 'class="font-italic"' : '' ?>>Code</a>
+            <th scope="col"><a href="<?php echo(generateUrl($request, 'sort', 'code', false)); ?>" <?php echo(($_GET['sort'] == "code") ? 'class="font-italic"' : ''); ?>>Code</a>
             </th>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'state', false) ?>" <?= ($_GET['sort'] == "state") ? 'class="font-italic"' : '' ?>>State</a>
+            <th scope="col"><a href="<?php echo(generateUrl($request, 'sort', 'state', false)); ?>" <?php echo(($_GET['sort'] == "state") ? 'class="font-italic"' : ''); ?>>State</a>
             </th>
-            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'city', false) ?>" <?= ($_GET['sort'] == "city") ? 'class="font-italic"' : '' ?>>City</a>
+            <th scope="col"><a href="<?php echo(generateUrl($request, 'sort', 'city', false)); ?>" <?php echo(($_GET['sort'] == "city") ? 'class="font-italic"' : ''); ?>>City</a>
             </th>
             <th scope="col">Address</th>
             <th scope="col">Timezone</th>
@@ -127,14 +127,14 @@ $airports = getPagination($airports, PER_PAGE, $page);
         -->
         <?php foreach ($airports as $airport): ?>
             <tr>
-                <td><?= $airport['name'] ?></td>
-                <td><?= $airport['code'] ?></td>
+                <td><?php echo($airport['name']); ?></td>
+                <td><?php echo($airport['code']); ?></td>
                 <td>
-                    <a href="<?= generateUrl($request, 'filter_by_state', $airport['state'], true) ?>"><?= $airport['state'] ?></a>
+                    <a href="<?php echo(generateUrl($request, 'filter_by_state', $airport['state'], true)); ?>"><?php echo($airport['state']); ?></a>
                 </td>
-                <td><?= $airport['city'] ?></td>
-                <td><?= $airport['address'] ?></td>
-                <td><?= $airport['timezone'] ?></td>
+                <td><?php echo($airport['city']); ?></td>
+                <td><?php echo($airport['address']); ?></td>
+                <td><?php echo($airport['timezone']); ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -151,7 +151,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item<?= ($page == 1) ? ' active' : '' ?>"><a class="page-link" href="<?= generateURL($request, 'page', 1, false) ?>"><?= 1 ?></a>
+            <li class="page-item<?php echo(($page == 1) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', 1, false)); ?>"><?php echo(1); ?></a>
             </li>
             <?php if ($pagesCount > PER_PAGE) { ?>
                 <?php if ($page > (PER_PAGE + 2)) { ?>
@@ -162,18 +162,18 @@ $airports = getPagination($airports, PER_PAGE, $page);
                 $end = (($page + PER_PAGE) >= $pagesCount) ? $pagesCount - 1 : ($page + PER_PAGE);
                 for ($i = $start; $i <= $end; $i++) {
                     ?>
-                    <li class="page-item<?= ($i == $page) ? ' active' : '' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $i, false) ?>"><?= $i ?></a>
+                    <li class="page-item<?php echo(($i == $page) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', $i, false)); ?>"><?php echo($i); ?></a>
                     </li>
                 <?php } ?>
                 <?php if ($page <= ($pagesCount - PER_PAGE - 2)) { ?>
                     <li class="page-item">...</li>
                 <?php } ?>
-                <li class="page-item<?= ($page == $pagesCount) ? ' active' : '' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $pagesCount, false) ?>"><?= $pagesCount ?></a>
+                <li class="page-item<?php echo(($page == $pagesCount) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', $pagesCount, false)); ?>"><?php echo($pagesCount); ?></a>
                 </li>
             <? } else if ($pagesCount > 1) {
                 for ($i = 2; $i <= $pagesCount; $i++) {
                     ?>
-                    <li class="page-item<?= ($i == $page) ? ' active' : '' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $i, false) ?>"><?= $i ?></a>
+                    <li class="page-item<?php echo(($i == $page) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', $i, false)); ?>"><?php echo($i); ?></a>
                     </li>
                 <?php }
             }
