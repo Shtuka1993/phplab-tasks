@@ -62,8 +62,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
     <meta name="description" content="">
     <title>Airports</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
 <main role="main" class="container">
@@ -103,17 +102,13 @@ $airports = getPagination($airports, PER_PAGE, $page);
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a
-                        href="<?= generateUrl($request, 'sort', 'name', false) ?>" <?= ($_GET['sort'] == "name") ? 'class="font-italic"' : '' ?>>Name</a>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'name', false) ?>" <?= ($_GET['sort'] == "name") ? 'class="font-italic"' : '' ?>>Name</a>
             </th>
-            <th scope="col"><a
-                        href="<?= generateUrl($request, 'sort', 'code', false) ?>" <?= ($_GET['sort'] == "code") ? 'class="font-italic"' : '' ?>>Code</a>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'code', false) ?>" <?= ($_GET['sort'] == "code") ? 'class="font-italic"' : '' ?>>Code</a>
             </th>
-            <th scope="col"><a
-                        href="<?= generateUrl($request, 'sort', 'state', false) ?>" <?= ($_GET['sort'] == "state") ? 'class="font-italic"' : '' ?>>State</a>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'state', false) ?>" <?= ($_GET['sort'] == "state") ? 'class="font-italic"' : '' ?>>State</a>
             </th>
-            <th scope="col"><a
-                        href="<?= generateUrl($request, 'sort', 'city', false) ?>" <?= ($_GET['sort'] == "city") ? 'class="font-italic"' : '' ?>>City</a>
+            <th scope="col"><a href="<?= generateUrl($request, 'sort', 'city', false) ?>" <?= ($_GET['sort'] == "city") ? 'class="font-italic"' : '' ?>>City</a>
             </th>
             <th scope="col">Address</th>
             <th scope="col">Timezone</th>
@@ -156,8 +151,7 @@ $airports = getPagination($airports, PER_PAGE, $page);
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item<?= ($page == 1) ? ' active' : '' ?>"><a class="page-link"
-                                                                         href="<?= generateURL($request, 'page', 1, false) ?>"><?= 1 ?></a>
+            <li class="page-item<?= ($page == 1) ? ' active' : '' ?>"><a class="page-link" href="<?= generateURL($request, 'page', 1, false) ?>"><?= 1 ?></a>
             </li>
             <?php if ($pagesCount > PER_PAGE) { ?>
                 <?php if ($page > (PER_PAGE + 2)) { ?>
@@ -168,21 +162,18 @@ $airports = getPagination($airports, PER_PAGE, $page);
                 $end = (($page + PER_PAGE) >= $pagesCount) ? $pagesCount - 1 : ($page + PER_PAGE);
                 for ($i = $start; $i <= $end; $i++) {
                     ?>
-                    <li class="page-item<?= ($i == $page) ? ' active' : '' ?>"><a class="page-link"
-                                                                                  href="<?= generateURL($request, 'page', $i, false) ?>"><?= $i ?></a>
+                    <li class="page-item<?= ($i == $page) ? ' active' : '' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $i, false) ?>"><?= $i ?></a>
                     </li>
                 <?php } ?>
                 <?php if ($page <= ($pagesCount - PER_PAGE - 2)) { ?>
                     <li class="page-item">...</li>
                 <?php } ?>
-                <li class="page-item<?= ($page == $pagesCount) ? ' active' : '' ?>"><a class="page-link"
-                                                                                       href="<?= generateURL($request, 'page', $pagesCount, false) ?>"><?= $pagesCount ?></a>
+                <li class="page-item<?= ($page == $pagesCount) ? ' active' : '' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $pagesCount, false) ?>"><?= $pagesCount ?></a>
                 </li>
             <? } else if ($pagesCount > 1) {
                 for ($i = 2; $i <= $pagesCount; $i++) {
                     ?>
-                    <li class="page-item<?= ($i == $page) ? ' active' : '' ?>"><a class="page-link"
-                                                                                  href="<?= generateURL($request, 'page', $i, false) ?>"><?= $i ?></a>
+                    <li class="page-item<?= ($i == $page) ? ' active' : '' ?>"><a class="page-link" href="<?= generateURL($request, 'page', $i, false) ?>"><?= $i ?></a>
                     </li>
                 <?php }
             }
