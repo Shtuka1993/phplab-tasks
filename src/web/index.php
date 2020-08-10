@@ -14,7 +14,7 @@ $airports = require './airports.php';
 
 /** First of all generate state filtering(if it is set) - so we have array of available letters before filtering by letter  */
 if (isset($_GET['filter_by_state'])) {
-    $airports = filterByState($airports, $_GET['filter_by_state']);
+    $airports = filterByState($airports);
 }
 
 /**

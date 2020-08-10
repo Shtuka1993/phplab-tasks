@@ -12,10 +12,8 @@
 function getUniqueFirstLetters(array $airports)
 {
     if (is_array($airports)) {
-        var_dump($airports);//...
         $letters = [];
         foreach ($airports as $var) {
-            var_dump($var);//...
             if (is_array($var)) {
                 if ((array_key_exists('name', $var))) {
                     $letters[] = strtoupper(getFirstLetter($var));
@@ -38,59 +36,79 @@ function getUniqueFirstLetters(array $airports)
 /**
  * Returns first letter of airports array item name
  *
- * @param $var
+ * @param array $var
  * @return mixed
  */
-function getFirstLetter($var)
+function getFirstLetter(array $var)
 {
-    return $var['name'][0];
+    if(array_key_exists('name', $var)) {
+
+        return $var['name'][0];
+    } else {
+        throw new InvalidArgumentException();
+    }
 }
 
 /**
  * Return airport array filtered by first letter
  *
- * @param $array
- * @param $key
+ * @param array $array
  * @return array
  */
-function filterByFirstLetter($array)
+function filterByFirstLetter(array $array)
 {
-    return array_filter($array, 'filterFirstLetter');
+    return array_values(array_filter($array, 'filterFirstLetter'));
 }
 
 /**
  * Callback function for filtering by first letter
  *
- * @param $var
+ * @param array $var
  * @return bool
  */
-function filterFirstLetter($var)
+function filterFirstLetter(array $var)
 {
-    return getFirstLetter($var) === $_GET['filter_by_first_letter'];
+    if(array_key_exists('name', $var)) {
+        return getFirstLetter($var) === $_GET['filter_by_first_letter'];
+    } else {
+        throw new InvalidArgumentException();
+    }
 }
 
 /**
  * Sort array by key
  *
- * @param $array
- * @param $key
- * @return mixed
+ * @param array $array
+ * @param string $key
+ * @return array
  */
-function sortByKey($array, $key)
+function sortByKey(array $array, string $key)
 {
-    usort($array, 'sortBy' . ucfirst($key));
+    $callback = 'sortBy' . ucfirst($key);
+    if (function_exists($callback)) {
+        if(count($array) !== 1) {
+            try {
+                usort($array, $callback);
 
-    return $array;
+                return $array;
+            } catch (Error $e) {
+                throw new InvalidArgumentException();
+            }
+        } elseif(is_array($array[0]) && array_key_exists($key, $array[0])) {
+            return $array;
+        }
+    }
+    throw new InvalidArgumentException();
 }
 
 /**
  * Function that generate result for sorting callback function when we check to strings
  *
- * @param $var1
- * @param $var2
+ * @param string $var1
+ * @param string $var2
  * @return int
  */
-function checkSortingStrings($var1, $var2) {
+function checkSortingStrings(string $var1, string $var2) {
     if ($var1 === $var2) {
 
         return 0;
@@ -102,99 +120,115 @@ function checkSortingStrings($var1, $var2) {
 /**
  * Callback function that apply sorting by name
  *
- * @param $var1
- * @param $var2
+ * @param array $var1
+ * @param array $var2
  * @return int
  */
-function sortByName($var1, $var2)
+function sortByName(array $var1, array $var2)
 {
-    $var1 = $var1['name'];
-    $var2 = $var2['name'];
+    if(array_key_exists('name', $var1) && array_key_exists('name', $var2)) {
+        $var1 = $var1['name'];
+        $var2 = $var2['name'];
 
-    return checkSortingStrings($var1, $var2);
+        return checkSortingStrings($var1, $var2);
+    } else {
+        throw new InvalidArgumentException();
+    }
 }
 
 /**
  * Callback function that apply sorting by code
  *
- * @param $var1
- * @param $var2
+ * @param array $var1
+ * @param array $var2
  * @return int
  */
-function sortByCode($var1, $var2)
+function sortByCode(array $var1, array $var2)
 {
-    $var1 = $var1['code'];
-    $var2 = $var2['code'];
+    if(array_key_exists('code', $var1) && array_key_exists('code', $var2)) {
+        $var1 = $var1['code'];
+        $var2 = $var2['code'];
 
-    return checkSortingStrings($var1, $var2);
+        return checkSortingStrings($var1, $var2);
+    } else {
+        throw new InvalidArgumentException();
+    }
 }
 
 /**
  * Callback function that apply sorting by state
  *
- * @param $var1
- * @param $var2
+ * @param array $var1
+ * @param array $var2
  * @return int
  */
-function sortByState($var1, $var2)
+function sortByState(array $var1, array $var2)
 {
-    $var1 = $var1['state'];
-    $var2 = $var2['state'];
+    if(array_key_exists('state', $var1) && array_key_exists('state', $var2)) {
+        $var1 = $var1['state'];
+        $var2 = $var2['state'];
 
-    return checkSortingStrings($var1, $var2);
+        return checkSortingStrings($var1, $var2);
+    } else {
+        throw new InvalidArgumentException();
+    }
 }
 
 /**
  * Callback function that apply sorting by city
  *
- * @param $var1
- * @param $var2
+ * @param array $var1
+ * @param array $var2
  * @return int
  */
-function sortByCity($var1, $var2)
+function sortByCity(array $var1, array $var2)
 {
-    $var1 = $var1['city'];
-    $var2 = $var2['city'];
+    if(array_key_exists('city', $var1) && array_key_exists('city', $var2)) {
+        $var1 = $var1['city'];
+        $var2 = $var2['city'];
 
-    return checkSortingStrings($var1, $var2);
+        return checkSortingStrings($var1, $var2);
+    } else {
+        throw new InvalidArgumentException();
+    }
 }
 
 /**
  * Return airport array filtered by state
  *
- * @param $array
- * @param $key
+ * @param array $array
  * @return array
  */
-function filterByState($array, $key)
+function filterByState(array $array)
 {
-    define('STATE', $key);
-
-    return array_filter($array, 'filterState');
+    return array_values(array_filter($array, 'filterState'));
 }
 
 /**
  * Callback function for filtering by state
  *
- * @param $var
+ * @param array $var
  * @return bool
  */
-function filterState($var)
+function filterState(array $var)
 {
-
-    return $var['state'] === STATE;
+    if(array_key_exists('state', $var)) {
+        return $var['state'] === $_GET['filter_by_state'];
+    } else {
+        throw new InvalidArgumentException();
+    }
 }
 
 /**
  * Generate request URL
  *
- * @param $request
- * @param $key
- * @param $value
- * @param $resetPage
+ * @param array $request
+ * @param string $key
+ * @param string $value
+ * @param bool $resetPage
  * @return string
  */
-function generateURL($request, $key, $value, $resetPage)
+function generateURL(array $request, string $key, string $value, bool $resetPage)
 {
     $request[$key] = $value;
     if ($resetPage) {
@@ -211,11 +245,11 @@ function generateURL($request, $key, $value, $resetPage)
 /**
  * Return count of page
  *
- * @param $array
- * @param $per_page
+ * @param array $array
+ * @param int $per_page
  * @return float|int
  */
-function pagination($array, $per_page)
+function pagination(array $array, int $per_page)
 {
     $pages = (count($array) / $per_page);
     $pagesInt = (int)(count($array) / $per_page);
@@ -227,12 +261,12 @@ function pagination($array, $per_page)
 /**
  * Filters array by current page
  *
- * @param $array
- * @param $per_page
- * @param $page
+ * @param array $array
+ * @param int $per_page
+ * @param int $page
  * @return array
  */
-function getPagination($array, $per_page, $page)
+function getPagination(array $array, int $per_page, int $page)
 {
 
     return array_slice($array, ($page - 1) * $per_page, $per_page);
