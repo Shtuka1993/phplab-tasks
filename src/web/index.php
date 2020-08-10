@@ -1,6 +1,8 @@
 <?php
 require_once './functions.php';
 
+define('PER_PAGE', 5);
+
 $airports = require './airports.php';
 
 // Filtering
@@ -10,12 +12,32 @@ $airports = require './airports.php';
  * (see Filtering tasks 1 and 2 below)
  */
 
+/** First of all generate state filtering(if it is set) - so we have array of available letters before filtering by letter  */
+if (isset($_GET['filter_by_state'])) {
+    $airports = filterByState($airports);
+}
+
+/**
+ * Lets generate updated letters array - after applying of filtering
+ */
+$letters = getUniqueFirstLetters($airports);
+
+if (isset($_GET['filter_by_first_letter'])) {
+    $airports = filterByFirstLetter($airports);
+}
+
 // Sorting
 /**
  * Here you need to check $_GET request if it has sorting key
  * and apply sorting
  * (see Sorting task below)
  */
+if (isset($_GET['sort'])) {
+    $airports = sortByKey($airports, $_GET['sort']);
+}
+
+$pagesCount = pagination($airports, PER_PAGE);
+$request = $_GET;
 
 // Pagination
 /**
@@ -23,6 +45,14 @@ $airports = require './airports.php';
  * and apply pagination logic
  * (see Pagination task below)
  */
+if (isset($_GET['page'])) {
+    $page = ($_GET['page'] > $pagesCount) ? 1 : $_GET['page'];
+
+} else {
+    $page = 1;
+}
+$airports = getPagination($airports, PER_PAGE, $page);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -52,8 +82,8 @@ $airports = require './airports.php';
     <div class="alert alert-dark">
         Filter by first letter:
 
-        <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <a href="#"><?= $letter ?></a>
+        <?php foreach ($letters as $letter): ?>
+            <a href="<?php echo(generateUrl($request, 'filter_by_first_letter', $letter, true)); ?>" <?php echo(($_GET['filter_by_first_letter'] == $letter) ? 'class="font-weight-bold"' : ''); ?>><?php echo($letter); ?></a>
         <?php endforeach; ?>
 
         <a href="/" class="float-right">Reset all filters</a>
@@ -72,10 +102,14 @@ $airports = require './airports.php';
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><a href="#">Name</a></th>
-            <th scope="col"><a href="#">Code</a></th>
-            <th scope="col"><a href="#">State</a></th>
-            <th scope="col"><a href="#">City</a></th>
+            <th scope="col"><a href="<?php echo(generateUrl($request, 'sort', 'name', false)); ?>" <?php echo(($_GET['sort'] == "name") ? 'class="font-italic"' : ''); ?>>Name</a>
+            </th>
+            <th scope="col"><a href="<?php echo(generateUrl($request, 'sort', 'code', false)); ?>" <?php echo(($_GET['sort'] == "code") ? 'class="font-italic"' : ''); ?>>Code</a>
+            </th>
+            <th scope="col"><a href="<?php echo(generateUrl($request, 'sort', 'state', false)); ?>" <?php echo(($_GET['sort'] == "state") ? 'class="font-italic"' : ''); ?>>State</a>
+            </th>
+            <th scope="col"><a href="<?php echo(generateUrl($request, 'sort', 'city', false)); ?>" <?php echo(($_GET['sort'] == "city") ? 'class="font-italic"' : ''); ?>>City</a>
+            </th>
             <th scope="col">Address</th>
             <th scope="col">Timezone</th>
         </tr>
@@ -92,14 +126,16 @@ $airports = require './airports.php';
                i.e. if you have filter_by_first_letter set you can additionally use filter_by_state
         -->
         <?php foreach ($airports as $airport): ?>
-        <tr>
-            <td><?= $airport['name'] ?></td>
-            <td><?= $airport['code'] ?></td>
-            <td><a href="#"><?= $airport['state'] ?></a></td>
-            <td><?= $airport['city'] ?></td>
-            <td><?= $airport['address'] ?></td>
-            <td><?= $airport['timezone'] ?></td>
-        </tr>
+            <tr>
+                <td><?php echo($airport['name']); ?></td>
+                <td><?php echo($airport['code']); ?></td>
+                <td>
+                    <a href="<?php echo(generateUrl($request, 'filter_by_state', $airport['state'], true)); ?>"><?php echo($airport['state']); ?></a>
+                </td>
+                <td><?php echo($airport['city']); ?></td>
+                <td><?php echo($airport['address']); ?></td>
+                <td><?php echo($airport['timezone']); ?></td>
+            </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
@@ -115,9 +151,33 @@ $airports = require './airports.php';
     -->
     <nav aria-label="Navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item<?php echo(($page == 1) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', 1, false)); ?>"><?php echo(1); ?></a>
+            </li>
+            <?php if ($pagesCount > PER_PAGE) { ?>
+                <?php if ($page > (PER_PAGE + 2)) { ?>
+                    <li class="page-item">...</li>
+                <?php } ?>
+                <?php
+                $start = (($page - PER_PAGE) <= 1) ? 2 : ($page - PER_PAGE);
+                $end = (($page + PER_PAGE) >= $pagesCount) ? $pagesCount - 1 : ($page + PER_PAGE);
+                for ($i = $start; $i <= $end; $i++) {
+                    ?>
+                    <li class="page-item<?php echo(($i == $page) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', $i, false)); ?>"><?php echo($i); ?></a>
+                    </li>
+                <?php } ?>
+                <?php if ($page <= ($pagesCount - PER_PAGE - 2)) { ?>
+                    <li class="page-item">...</li>
+                <?php } ?>
+                <li class="page-item<?php echo(($page == $pagesCount) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', $pagesCount, false)); ?>"><?php echo($pagesCount); ?></a>
+                </li>
+            <? } elseif ($pagesCount > 1) {
+                for ($i = 2; $i <= $pagesCount; $i++) {
+                    ?>
+                    <li class="page-item<?php echo(($i == $page) ? ' active' : ''); ?>"><a class="page-link" href="<?php echo(generateURL($request, 'page', $i, false)); ?>"><?php echo($i); ?></a>
+                    </li>
+                <?php }
+            }
+            ?>
         </ul>
     </nav>
 
