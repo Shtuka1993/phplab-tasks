@@ -155,4 +155,22 @@ class GetUniqueFirstLettersTest extends TestCase
                 ['T']]
         ];
     }
+
+    /**
+     * @dataProvider negativeDataProvider
+     */
+    public function testNegative($input, $expected) {
+        $this->expectException($expected);
+
+        getUniqueFirstLetters($input);
+    }
+
+    public function negativeDataProvider() {
+        return [
+            [null, TypeError::class],
+            [['array'], InvalidArgumentException::class],
+            [$this, TypeError::class]
+
+        ];
+    }
 }

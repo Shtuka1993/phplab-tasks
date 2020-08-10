@@ -11,14 +11,28 @@
  */
 function getUniqueFirstLetters(array $airports)
 {
-    $letters = [];
-    foreach ($airports as $var) {
-        $letters[] = strtoupper(getFirstLetter($var));
-    }
-    $letters = array_unique($letters);
-    sort($letters);
+    if (is_array($airports)) {
+        var_dump($airports);//...
+        $letters = [];
+        foreach ($airports as $var) {
+            var_dump($var);//...
+            if (is_array($var)) {
+                if ((array_key_exists('name', $var))) {
+                    $letters[] = strtoupper(getFirstLetter($var));
+                } else {
+                    throw new InvalidArgumentException();
+                }
+            } else {
+                throw new InvalidArgumentException();
+            }
+        }
+        $letters = array_unique($letters);
+        sort($letters);
 
-    return $letters;
+        return $letters;
+    } else {
+        throw new InvalidArgumentException();
+    }
 }
 
 /**
