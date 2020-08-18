@@ -17,13 +17,11 @@ class Session implements Storage
      * Session constructor.
      *
      * Creates session and setups variable to access $_SESSION superglobal array by reference
-     *
-     * @param $superglobal
      */
-    public function __construct(&$superglobal)
+    public function __construct()
     {
         session_start();
-        $this->session = $superglobal;
+        $this->session = &$_SESSION;
     }
 
     /**

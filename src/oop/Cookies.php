@@ -20,18 +20,19 @@ class Cookies implements Storage
      *
      * Creates Cookies object to manipulate with cookies. Set ups setting for cookies. Such as duration and path for cookie.
      *
-     * @param $superglobal
      * @param int $duration
      * @param string $path
      */
-    public function __construct($superglobal , $duration = 86400, $path = '/')
+    public function __construct($duration = 86400, $path = '/')
     {
-        $this->cookies = $superglobal;
+        $this->cookies = $_COOKIE;
         $this->duration = $duration;
         $this->path = $path;
     }
 
     /**
+     * REturns all cookies
+     *
      * @param array $only
      * @return array
      */
@@ -45,6 +46,8 @@ class Cookies implements Storage
     }
 
     /**
+     * Return cookie by key
+     *
      * @param $key
      * @param null $default
      * @return null
@@ -55,6 +58,8 @@ class Cookies implements Storage
     }
 
     /**
+     * Sets cookie by key and value
+     *
      * @param $key
      * @param $value
      */
@@ -64,6 +69,8 @@ class Cookies implements Storage
     }
 
     /**
+     * Checks if such cookie exist
+     *
      * @param $key
      * @return bool
      */
@@ -73,6 +80,8 @@ class Cookies implements Storage
     }
 
     /**
+     * Remove such cookie
+     *
      * @param $key
      */
     public function remove($key)
