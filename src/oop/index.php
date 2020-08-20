@@ -1,3 +1,7 @@
+<?php
+    include_once('app.php');
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,15 +35,27 @@
         <div class="tab-content">
             <div id="request" class="container tab-pane active"><br>
                 <h3>Request</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Request all parameters - <b><?php print_r($requestAll); ?></b></p>
+                <p>Request selected parameters - <b><?php print_r($requestSelected); ?></b></p>
+                <p>Request get test parameter - <b><?php echo $requestTestGet; ?></b></p>
+                <p>Request post test parameter - <b><?php echo $requestTestPost; ?></b></p>
+                <p>Request post or get test parameter - <b><?php echo $requestTestQuery; ?></b></p>
+                <p>Request has parameter test - <b><?php echo $requestHasTest?"TRUE":"FALSE"; ?></b></p>
+                <p>User IP - <b><?php echo $ip; ?></b></p>
+                <p>User Brouser - <b><?php echo $brouser; ?></b></p>
             </div>
             <div id="cookie" class="container tab-pane fade"><br>
                 <h3>Cookie</h3>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Cookies all - <b><?php print_r($cookiesAll); ?></b></p>
+                <p>Cookies check if there is test - <b><?php echo $cookiesCheck?"TRUE":"FALSE"; ?></b></p>
+                <p>Cookies show test - <b><?php echo $cookiesTest; ?></b></p>
             </div>
             <div id="session" class="container tab-pane fade"><br>
                 <h3>Session</h3>
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+
+
+                ...
             </div>
         </div>
     </div>

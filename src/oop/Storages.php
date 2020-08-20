@@ -6,10 +6,7 @@
  * Time: 15:17
  */
 
-namespace interfaces;
-
-
-interface Storage
+interface Storages
 {
     public function all(array $only = []);
 

@@ -5,11 +5,9 @@
  * Date: 15.08.2020
  * Time: 0:04
  */
-namespace oop;
+include_once('Storages.php');
 
-use interfaces\Storage;
-
-class Cookies implements Storage
+class Cookies implements Storages
 {
     private $cookies;
     private $duration; // Default duration of cookie - 1 day
@@ -65,7 +63,7 @@ class Cookies implements Storage
      */
     public function set($key, $value)
     {
-        setcookie($key, $value, time() + $this->duration, $this->path);
+        setcookie($key, $value);
     }
 
     /**
@@ -79,7 +77,7 @@ class Cookies implements Storage
         return array_key_exists($key, $this->cookies);
     }
 
-    /**
+    /**,
      * Remove such cookie
      *
      * @param $key

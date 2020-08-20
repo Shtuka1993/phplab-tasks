@@ -6,10 +6,7 @@
  * Time: 14:46
  */
 
-namespace interfaces;
-
-
-interface Request
+interface Requests
 {
     public function query($key, $default = null);
 

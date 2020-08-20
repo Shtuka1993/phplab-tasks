@@ -5,11 +5,13 @@
  * Date: 15.08.2020
  * Time: 0:02
  */
-namespace oop;
 
-use interfaces;
+include_once('Requests.php');
+include_once('Cookies.php');
+include_once('Session.php');
 
-class Request implements interfaces\Request
+
+class Request implements Requests
 {
     public $cookies;
     public $session;

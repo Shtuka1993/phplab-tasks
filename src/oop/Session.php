@@ -5,11 +5,10 @@
  * Date: 15.08.2020
  * Time: 0:05
  */
-namespace oop;
 
-use interfaces\Storage;
+include_once('Storages.php');
 
-class Session implements Storage
+class Session implements Storages
 {
     private $session;
 
