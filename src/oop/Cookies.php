@@ -7,8 +7,12 @@
  */
 include_once('Storages.php');
 
+include_once ('ArrayFunctions.php');
+
 class Cookies implements Storages
 {
+    use ArrayFunctions;
+
     private $cookies;
     private $duration; // Default duration of cookie - 1 day
     private $path; // Default path - /
@@ -29,7 +33,7 @@ class Cookies implements Storages
     }
 
     /**
-     * REturns all cookies
+     * Returns all cookies
      *
      * @param array $only
      * @return array
@@ -37,9 +41,11 @@ class Cookies implements Storages
     public function all(array $only = [])
     {
         if(empty($only)) {
+
             return $this->cookies;
         } else {
-            return [];
+
+            return $this->searchByKeys($this->cookies, $only);
         }
     }
 
@@ -50,7 +56,7 @@ class Cookies implements Storages
      * @param null $default
      * @return null
      */
-    public function get($key, $default = null)
+    public function get($key, $default = 'test'/*null*/)
     {
         return $this->cookies[$key]?:$default;
     }
@@ -74,7 +80,7 @@ class Cookies implements Storages
      */
     public function has($key)
     {
-        return array_key_exists($key, $this->cookies);
+        return isset($this->cookies[$key]);
     }
 
     /**,
@@ -84,6 +90,7 @@ class Cookies implements Storages
      */
     public function remove($key)
     {
+        unset($this->cookies[$key]);
         setcookie($key, "", time() - 3600);
     }
 }

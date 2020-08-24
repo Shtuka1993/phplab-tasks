@@ -8,8 +8,12 @@
 
 include_once('Storages.php');
 
+include_once ('ArrayFunctions.php');
+
 class Session implements Storages
 {
+    use ArrayFunctions;
+
     private $session;
 
     /**
@@ -32,9 +36,11 @@ class Session implements Storages
     public function all(array $only = [])
     {
         if(empty($only)) {
+
             return $this->session;
         } else {
-            return [];
+
+            return $this->searchByKeys($this->session, $only);
         }
     }
 
@@ -69,7 +75,7 @@ class Session implements Storages
      */
     public function has($key)
     {
-        return array_key_exists($key, $this->session);
+        return isset($this->session[$key]);
     }
 
     /**
@@ -87,6 +93,7 @@ class Session implements Storages
      */
     public function clear()
     {
-        session_unset();
+        session_destroy();
+        $this->session = [];
     }
 }

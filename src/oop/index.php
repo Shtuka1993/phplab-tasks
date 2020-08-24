@@ -47,15 +47,17 @@
             <div id="cookie" class="container tab-pane fade"><br>
                 <h3>Cookie</h3>
                 <p>Cookies all - <b><?php print_r($cookiesAll); ?></b></p>
-                <p>Cookies check if there is test - <b><?php echo $cookiesCheck?"TRUE":"FALSE"; ?></b></p>
-                <p>Cookies show test - <b><?php echo $cookiesTest; ?></b></p>
+                <p>Cookies check if there is test - <b><?php echo $cookieCheck?"TRUE":"FALSE"; ?></b></p>
+                <p>Cookies show test - <b><?php echo $cookieTest; ?></b></p>
+                <p>Cookies after removing test 1 - <b><?php print_r($cookiesAllUpdated); ?></b></p>
             </div>
             <div id="session" class="container tab-pane fade"><br>
                 <h3>Session</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-
-
-                ...
+                <p>Session all - <b><?php print_r($sessionVariables); ?></b></p>
+                <p>Session started - <b><?php echo $sessionStarted?"TRUE":"FALSE"; ?></b></p>
+                <p>Check data deleting - <b><?php echo $checkDataDeleting ?></b></p>
+                <p>Session message - <b><?php echo $sessionMessage; ?></b></p>
+                <p>Session data after clearing - <b><?php print_r($sessionVariablesAfterClearing); ?></b></p>
             </div>
         </div>
     </div>

@@ -10,9 +10,12 @@ include_once('Requests.php');
 include_once('Cookies.php');
 include_once('Session.php');
 
+include_once ('ArrayFunctions.php');
 
 class Request implements Requests
 {
+    use ArrayFunctions;
+
     public $cookies;
     public $session;
 
@@ -70,10 +73,13 @@ class Request implements Requests
      */
     public function all(array $only = [])
     {
+        $result = array_merge($this->get, $this->post);
         if(empty($only)) {
-            return array_merge($this->get, $this->post);
+
+            return $result;
         } else {
-            return [];
+
+            return $this->searchByKeys($result, $only);
         }
     }
 
