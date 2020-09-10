@@ -6,11 +6,12 @@
  * Time: 0:02
  */
 
-include_once('Requests.php');
+include_once('../Interfaces/Requests.php');
+
 include_once('Cookies.php');
 include_once('Session.php');
 
-include_once ('ArrayFunctions.php');
+include_once('../Traits/ArrayFunctions.php');
 
 class Request implements Requests
 {

@@ -8,7 +8,8 @@
 
 trait ArrayFunctions
 {
-    private function searchByKeys(array $array, array $keys) {
+    private function searchByKeys(array $array, array $keys)
+    {
         $result = [];
         foreach ($keys as $key) {
             $result[] = $array[$key];

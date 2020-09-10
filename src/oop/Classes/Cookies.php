@@ -5,9 +5,9 @@
  * Date: 15.08.2020
  * Time: 0:04
  */
-include_once('Storages.php');
+include_once('../Interfaces/Storages.php');
 
-include_once ('ArrayFunctions.php');
+include_once('../Traits/ArrayFunctions.php');
 
 class Cookies implements Storages
 {
@@ -40,11 +40,9 @@ class Cookies implements Storages
      */
     public function all(array $only = [])
     {
-        if(empty($only)) {
-
+        if (empty($only)) {
             return $this->cookies;
         } else {
-
             return $this->searchByKeys($this->cookies, $only);
         }
     }

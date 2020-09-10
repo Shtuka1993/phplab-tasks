@@ -6,9 +6,9 @@
  * Time: 0:05
  */
 
-include_once('Storages.php');
+include_once('../Interfaces/Storages.php');
 
-include_once ('ArrayFunctions.php');
+include_once('../Traits/ArrayFunctions.php');
 
 class Session implements Storages
 {
